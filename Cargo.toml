@@ -1,12 +1,11 @@
 [package]
-name = "pizza-stconvert"
+name = "pizza-analysis-stconvert"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Simplified/Traditional Chinese conversion tokenizer for pizza-engine"
-repository = "https://github.com/infinilabs/pizza-stconvert"
+repository = "https://github.com/infinilabs/analysis-stconvert"
 
-[workspace]
 
 [features]
 default = ["engine"]

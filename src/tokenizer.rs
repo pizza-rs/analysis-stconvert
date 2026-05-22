@@ -8,7 +8,7 @@
 //!   for per-token normalization in an analysis chain). Supports `keep_both`
 //!   mode where both original and converted forms are emitted.
 
-use std::borrow::Cow;
+use alloc::borrow::Cow;
 
 use pizza_engine::analysis::{
     Normalizer, NormalizerClone, Token, TokenFilter, TokenFilterClone, Tokenizer, TokenizerClone,

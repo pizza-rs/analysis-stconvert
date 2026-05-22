@@ -1,3 +1,6 @@
+#![no_std]
+extern crate alloc;
+
 //! # pizza-stconvert
 //!
 //! High-performance Simplified/Traditional Chinese converter with
@@ -6,7 +9,7 @@
 //! ## Quick start
 //!
 //! ```
-//! use pizza_stconvert::{convert, ConvertType};
+//! use pizza_analysis_stconvert::{convert, ConvertType};
 //!
 //! // Traditional → Simplified
 //! assert_eq!(convert("憂鬱的台灣烏龜", ConvertType::T2S), "忧郁的台湾乌龟");
@@ -18,7 +21,7 @@
 //! ## Buffer reuse for high throughput
 //!
 //! ```
-//! use pizza_stconvert::{STConverter, ConvertType};
+//! use pizza_analysis_stconvert::{STConverter, ConvertType};
 //!
 //! let converter = STConverter::new(ConvertType::T2S);
 //! let mut buf = String::new();
@@ -43,6 +46,8 @@ pub use converter::{convert, convert_to, STConverter};
 
 #[cfg(feature = "engine")]
 pub use tokenizer::{STConvertNormalizer, STConvertTokenFilter, STConvertTokenizer};
+pub mod register;
+pub use register::register_all;
 
 #[cfg(test)]
 mod tests {

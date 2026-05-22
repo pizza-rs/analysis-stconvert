@@ -11,7 +11,7 @@
 //!   stack-resident buffer (no heap allocation).
 //! - **`convert_to()` API**: callers can reuse an output buffer across calls.
 
-use std::borrow::Cow;
+use alloc::borrow::Cow;
 
 use crate::config::ConvertType;
 use crate::dict::{self, Tables, UnifiedLookup};
@@ -199,7 +199,7 @@ impl STConverter {
 /// Simple one-shot conversion function.
 ///
 /// ```
-/// use pizza_stconvert::{convert, ConvertType};
+/// use pizza_analysis_stconvert::{convert, ConvertType};
 ///
 /// let result = convert("憂鬱的台灣烏龜", ConvertType::T2S);
 /// assert_eq!(result, "忧郁的台湾乌龟");
