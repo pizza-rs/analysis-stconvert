@@ -12,7 +12,7 @@
 ---
 
 High-performance Simplified/Traditional Chinese converter for
-[pizza-engine](https://github.com/infinilabs/pizza).
+[pizza-engine](https://github.com/pizza-rs/pizza).
 
 ## Features
 

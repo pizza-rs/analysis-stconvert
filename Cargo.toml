@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 description = "Simplified/Traditional Chinese conversion plugin for INFINI Pizza"
-repository = "https://github.com/infinilabs/analysis-stconvert"
+repository = "https://github.com/pizza-rs/analysis-stconvert"
 
 
 [features]
