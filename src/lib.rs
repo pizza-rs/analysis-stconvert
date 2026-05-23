@@ -1,6 +1,4 @@
-#![no_std]
-extern crate alloc;
-
+#![cfg_attr(not(feature = "std"), no_std)]
 //! # pizza-stconvert
 //!
 //! High-performance Simplified/Traditional Chinese converter with
@@ -32,7 +30,7 @@ extern crate alloc;
 //!     // use buf...
 //! }
 //! ```
-
+extern crate alloc;
 mod config;
 mod converter;
 mod dict;
@@ -46,7 +44,9 @@ pub use converter::{convert, convert_to, STConverter};
 
 #[cfg(feature = "engine")]
 pub use tokenizer::{STConvertNormalizer, STConvertTokenFilter, STConvertTokenizer};
+#[cfg(feature = "engine")]
 pub mod register;
+#[cfg(feature = "engine")]
 pub use register::register_all;
 
 #[cfg(test)]

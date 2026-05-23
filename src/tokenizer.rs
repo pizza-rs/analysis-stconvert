@@ -43,12 +43,6 @@ impl Normalizer for STConvertNormalizer {
     }
 }
 
-impl NormalizerClone for STConvertNormalizer {
-    fn clone_box(&self) -> Box<dyn Normalizer> {
-        Box::new(self.clone())
-    }
-}
-
 /// Tokenizer that converts the full input text and emits it as a single token.
 #[derive(Clone)]
 pub struct STConvertTokenizer {
@@ -94,12 +88,6 @@ impl Tokenizer for STConvertTokenizer {
                 position: 0,
             }]
         }
-    }
-}
-
-impl TokenizerClone for STConvertTokenizer {
-    fn clone_box(&self) -> Box<dyn Tokenizer> {
-        Box::new(self.clone())
     }
 }
 
@@ -149,8 +137,4 @@ impl TokenFilter for STConvertTokenFilter {
     }
 }
 
-impl TokenFilterClone for STConvertTokenFilter {
-    fn clone_box(&self) -> Box<dyn TokenFilter> {
-        Box::new(self.clone())
-    }
-}
+

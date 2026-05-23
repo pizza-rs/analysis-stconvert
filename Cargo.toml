@@ -2,14 +2,15 @@
 name = "pizza-analysis-stconvert"
 version = "0.1.0"
 edition = "2021"
-license = "Apache-2.0"
-description = "Simplified/Traditional Chinese conversion tokenizer for pizza-engine"
+license = "MIT"
+description = "Simplified/Traditional Chinese conversion plugin for INFINI Pizza"
 repository = "https://github.com/infinilabs/analysis-stconvert"
 
 
 [features]
 default = ["engine"]
 engine = ["dep:pizza-engine"]
+std = ["pizza-engine?/std"]
 
 [dependencies]
-pizza-engine = { path = "../../lib/engine", optional = true }
+pizza-engine = { path = "../../lib/engine", optional = true, default-features = false }
