@@ -54,10 +54,10 @@ Benchmarked on Apple Silicon (M-series), `--release`, 1 MB input, 100 iterations
 use pizza_stconvert::{convert, ConvertType};
 
 // Traditional → Simplified
-assert_eq!(convert("憂鬱的台灣烏龜", ConvertType::T2S), "忧郁的台湾乌龟");
+assert_eq!(convert("計算機科學與技術", ConvertType::T2S), "计算机科学与技术");
 
 // Simplified → Traditional
-assert_eq!(convert("忧郁的台湾乌龟", ConvertType::S2T), "憂鬱的臺灣烏龜");
+assert_eq!(convert("计算机科学与技术", ConvertType::S2T), "計算機科學與技術");
 ```
 
 ### Buffer reuse (high-throughput)
@@ -113,9 +113,9 @@ use pizza_stconvert::{STConvertNormalizer, ConvertConfig, ConvertType};
 use pizza_engine::analysis::Normalizer;
 
 let normalizer = STConvertNormalizer::new(ConvertConfig::new(ConvertType::T2S));
-let mut text = String::from("憂鬱的台灣烏龜");
+let mut text = String::from("計算機科學與技術");
 normalizer.normalize(&mut text);
-assert_eq!(text, "忧郁的台湾乌龟");
+assert_eq!(text, "计算机科学与技术");
 ```
 
 ## Feature flags

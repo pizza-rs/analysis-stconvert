@@ -201,8 +201,8 @@ impl STConverter {
 /// ```
 /// use pizza_analysis_stconvert::{convert, ConvertType};
 ///
-/// let result = convert("憂鬱的台灣烏龜", ConvertType::T2S);
-/// assert_eq!(result, "忧郁的台湾乌龟");
+/// let result = convert("計算機科學與技術", ConvertType::T2S);
+/// assert_eq!(result, "计算机科学与技术");
 /// ```
 #[inline]
 pub fn convert(input: &str, convert_type: ConvertType) -> String {

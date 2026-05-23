@@ -10,10 +10,10 @@
 //! use pizza_analysis_stconvert::{convert, ConvertType};
 //!
 //! // Traditional → Simplified
-//! assert_eq!(convert("憂鬱的台灣烏龜", ConvertType::T2S), "忧郁的台湾乌龟");
+//! assert_eq!(convert("計算機科學與技術", ConvertType::T2S), "计算机科学与技术");
 //!
 //! // Simplified → Traditional
-//! assert_eq!(convert("忧郁的台湾乌龟", ConvertType::S2T), "憂鬱的臺灣烏龜");
+//! assert_eq!(convert("计算机科学与技术", ConvertType::S2T), "計算機科學與技術");
 //! ```
 //!
 //! ## Buffer reuse for high throughput
@@ -56,13 +56,13 @@ mod tests {
     #[test]
     fn test_t2s_basic() {
         let c = STConverter::new(ConvertType::T2S);
-        assert_eq!(c.convert("憂鬱的台灣烏龜"), "忧郁的台湾乌龟");
+        assert_eq!(c.convert("計算機科學與技術"), "计算机科学与技术");
     }
 
     #[test]
     fn test_s2t_basic() {
         let c = STConverter::new(ConvertType::S2T);
-        assert_eq!(c.convert("忧郁的台湾乌龟"), "憂鬱的臺灣烏龜");
+        assert_eq!(c.convert("计算机科学与技术"), "計算機科學與技術");
     }
 
     #[test]
