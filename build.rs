@@ -24,6 +24,13 @@ struct Dict {
 const MULTI_START_BIT: u32 = 1 << 31;
 
 fn main() {
+    // Only emit the optimized static tables when the `embed` feature is on.
+    // Without it, dict.rs builds equivalent tables at runtime from the external
+    // (or embedded raw-text) dictionaries — see `dict::runtime`.
+    if env::var_os("CARGO_FEATURE_EMBED").is_none() {
+        return;
+    }
+
     let out_dir = env::var("OUT_DIR").unwrap();
     let dest = Path::new(&out_dir).join("generated.rs");
 

@@ -8,8 +8,16 @@ repository = "https://github.com/pizza-rs/analysis-stconvert"
 
 
 [features]
-default = ["engine"]
+default = ["engine", "embed", "embed-fallback"]
+# Embed the raw mapping text as a runtime fallback (used in no-embed builds).
+# Disable for a smaller binary that loads only from config/analysis/stconvert/.
+embed-fallback = []
 engine = ["dep:pizza-engine"]
+# Bake the optimized conversion tables into the binary at build time (fastest,
+# self-contained). Disable to load dictionaries at runtime from the external
+# `config/analysis/stconvert/` directory (editable), with the embedded raw text
+# as a fallback.
+embed = []
 std = ["pizza-engine?/std"]
 
 [dependencies]
