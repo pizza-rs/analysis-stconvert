@@ -182,9 +182,21 @@ fn write_unified_table(
     let min_key = unified.first().map(|&(k, _)| k).unwrap_or(0);
     let max_key = unified.last().map(|&(k, _)| k).unwrap_or(0);
 
-    writeln!(out, "pub(crate) const {prefix}_MIN_KEY: u32 = 0x{min_key:X};").unwrap();
-    writeln!(out, "pub(crate) const {prefix}_MAX_KEY: u32 = 0x{max_key:X};").unwrap();
-    writeln!(out, "pub(crate) static {prefix}_UNIFIED: &[(u32, u32)] = &[").unwrap();
+    writeln!(
+        out,
+        "pub(crate) const {prefix}_MIN_KEY: u32 = 0x{min_key:X};"
+    )
+    .unwrap();
+    writeln!(
+        out,
+        "pub(crate) const {prefix}_MAX_KEY: u32 = 0x{max_key:X};"
+    )
+    .unwrap();
+    writeln!(
+        out,
+        "pub(crate) static {prefix}_UNIFIED: &[(u32, u32)] = &["
+    )
+    .unwrap();
     for &(k, v) in &unified {
         writeln!(out, "    (0x{k:X}, 0x{v:X}),").unwrap();
     }
@@ -194,7 +206,11 @@ fn write_unified_table(
 /// Write packed multi-char table: keep direct &[(&str, &str)] for fast lookup.
 /// The binary search comparison is faster with pre-made string slices.
 fn write_packed_multi(out: &mut fs::File, prefix: &str, multi: &[(String, String)]) {
-    writeln!(out, "pub(crate) static {prefix}_MULTI: &[(&str, &str)] = &[").unwrap();
+    writeln!(
+        out,
+        "pub(crate) static {prefix}_MULTI: &[(&str, &str)] = &["
+    )
+    .unwrap();
     for (k, v) in multi {
         writeln!(out, "    ({:?}, {:?}),", k, v).unwrap();
     }

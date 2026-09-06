@@ -10,9 +10,13 @@
 
 use alloc::borrow::Cow;
 
-use pizza_engine::analysis::{
-    Normalizer, NormalizerClone, Token, TokenFilter, TokenFilterClone, Tokenizer, TokenizerClone,
-};
+use pizza_engine::analysis::Normalizer;
+use pizza_engine::analysis::NormalizerClone;
+use pizza_engine::analysis::Token;
+use pizza_engine::analysis::TokenFilter;
+use pizza_engine::analysis::TokenFilterClone;
+use pizza_engine::analysis::Tokenizer;
+use pizza_engine::analysis::TokenizerClone;
 
 use crate::config::ConvertConfig;
 use crate::converter::STConverter;
@@ -68,9 +72,8 @@ impl Tokenizer for STConvertTokenizer {
         let end = input.len() as u32;
 
         if self.config.keep_both && converted != input {
-            let mut combined = String::with_capacity(
-                input.len() + self.config.delimiter.len() + converted.len(),
-            );
+            let mut combined =
+                String::with_capacity(input.len() + self.config.delimiter.len() + converted.len());
             combined.push_str(input);
             combined.push_str(self.config.delimiter);
             combined.push_str(&converted);
@@ -136,5 +139,3 @@ impl TokenFilter for STConvertTokenFilter {
         }
     }
 }
-
-

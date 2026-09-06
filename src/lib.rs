@@ -7,19 +7,27 @@
 //! ## Quick start
 //!
 //! ```
-//! use pizza_analysis_stconvert::{convert, ConvertType};
+//! use pizza_analysis_stconvert::convert;
+//! use pizza_analysis_stconvert::ConvertType;
 //!
 //! // Traditional → Simplified
-//! assert_eq!(convert("計算機科學與技術", ConvertType::T2S), "计算机科学与技术");
+//! assert_eq!(
+//!     convert("計算機科學與技術", ConvertType::T2S),
+//!     "计算机科学与技术"
+//! );
 //!
 //! // Simplified → Traditional
-//! assert_eq!(convert("计算机科学与技术", ConvertType::S2T), "計算機科學與技術");
+//! assert_eq!(
+//!     convert("计算机科学与技术", ConvertType::S2T),
+//!     "計算機科學與技術"
+//! );
 //! ```
 //!
 //! ## Buffer reuse for high throughput
 //!
 //! ```
-//! use pizza_analysis_stconvert::{STConverter, ConvertType};
+//! use pizza_analysis_stconvert::ConvertType;
+//! use pizza_analysis_stconvert::STConverter;
 //!
 //! let converter = STConverter::new(ConvertType::T2S);
 //! let mut buf = String::new();
@@ -39,11 +47,18 @@ mod dict;
 mod tokenizer;
 
 // Public API — keep flat and minimal.
-pub use config::{ConvertConfig, ConvertType};
-pub use converter::{convert, convert_to, STConverter};
+pub use config::ConvertConfig;
+pub use config::ConvertType;
+pub use converter::convert;
+pub use converter::convert_to;
+pub use converter::STConverter;
 
 #[cfg(feature = "engine")]
-pub use tokenizer::{STConvertNormalizer, STConvertTokenFilter, STConvertTokenizer};
+pub use tokenizer::STConvertNormalizer;
+#[cfg(feature = "engine")]
+pub use tokenizer::STConvertTokenFilter;
+#[cfg(feature = "engine")]
+pub use tokenizer::STConvertTokenizer;
 #[cfg(feature = "engine")]
 pub mod register;
 #[cfg(feature = "engine")]

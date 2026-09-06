@@ -1,6 +1,10 @@
 //! Comprehensive tests for pizza-analysis-stconvert (Simplified/Traditional Chinese conversion).
 
-use pizza_analysis_stconvert::{convert, convert_to, ConvertConfig, ConvertType, STConverter};
+use pizza_analysis_stconvert::convert;
+use pizza_analysis_stconvert::convert_to;
+use pizza_analysis_stconvert::ConvertConfig;
+use pizza_analysis_stconvert::ConvertType;
+use pizza_analysis_stconvert::STConverter;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // STConverter — construction

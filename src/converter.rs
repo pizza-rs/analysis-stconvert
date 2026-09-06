@@ -14,7 +14,9 @@
 use alloc::borrow::Cow;
 
 use crate::config::ConvertType;
-use crate::dict::{self, Tables, UnifiedLookup};
+use crate::dict::Tables;
+use crate::dict::UnifiedLookup;
+use crate::dict::{self};
 
 /// The converter. Holds pre-resolved table references for the configured
 /// direction to avoid re-dispatching on every call.
@@ -74,7 +76,10 @@ impl STConverter {
                     out.push_str(&input[i..i + char_len]);
                     i += char_len;
                 }
-                Some(UnifiedLookup { mapped, multi_start: false }) => {
+                Some(UnifiedLookup {
+                    mapped,
+                    multi_start: false,
+                }) => {
                     // Single-char mapping only, no multi-char possibility.
                     match mapped {
                         Some(c) => out.push(c),
@@ -82,7 +87,10 @@ impl STConverter {
                     }
                     i += char_len;
                 }
-                Some(UnifiedLookup { mapped, multi_start: true }) => {
+                Some(UnifiedLookup {
+                    mapped,
+                    multi_start: true,
+                }) => {
                     // This char might start a multi-char key. Use greedy matching.
                     i += char_len;
                     self.greedy_match(input, &mut i, ch, mapped, out);
@@ -183,12 +191,12 @@ impl STConverter {
     pub fn convert_cow<'a>(&self, input: &'a str) -> Cow<'a, str> {
         // Fast scan: does any char have a mapping or start a multi-key?
         let tables = &self.tables;
-        let needs_conversion = input.chars().any(|ch| {
-            match dict::lookup_unified(tables, ch) {
+        let needs_conversion = input
+            .chars()
+            .any(|ch| match dict::lookup_unified(tables, ch) {
                 None => false,
                 Some(ul) => ul.mapped.is_some() || ul.multi_start,
-            }
-        });
+            });
         if !needs_conversion {
             return Cow::Borrowed(input);
         }
@@ -199,7 +207,8 @@ impl STConverter {
 /// Simple one-shot conversion function.
 ///
 /// ```
-/// use pizza_analysis_stconvert::{convert, ConvertType};
+/// use pizza_analysis_stconvert::convert;
+/// use pizza_analysis_stconvert::ConvertType;
 ///
 /// let result = convert("計算機科學與技術", ConvertType::T2S);
 /// assert_eq!(result, "计算机科学与技术");

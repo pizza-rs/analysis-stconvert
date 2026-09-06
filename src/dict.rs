@@ -142,7 +142,10 @@ pub(crate) fn lookup_unified(tables: &Tables, c: char) -> Option<UnifiedLookup> 
                 None
             };
             let multi_start = (val & MULTI_START_BIT) != 0;
-            Some(UnifiedLookup { mapped, multi_start })
+            Some(UnifiedLookup {
+                mapped,
+                multi_start,
+            })
         }
         Err(_) => None,
     }
@@ -151,9 +154,15 @@ pub(crate) fn lookup_unified(tables: &Tables, c: char) -> Option<UnifiedLookup> 
 /// Find the multi-char group for a given first char.
 /// Returns the slice of multi entries starting with this char.
 #[inline]
-pub(crate) fn get_multi_group(tables: &Tables, first_char: char) -> &'static [(&'static str, &'static str)] {
+pub(crate) fn get_multi_group(
+    tables: &Tables,
+    first_char: char,
+) -> &'static [(&'static str, &'static str)] {
     let cp = first_char as u32;
-    match tables.multi_groups.binary_search_by_key(&cp, |&(k, _, _)| k) {
+    match tables
+        .multi_groups
+        .binary_search_by_key(&cp, |&(k, _, _)| k)
+    {
         Ok(i) => {
             let (_, start, count) = tables.multi_groups[i];
             &tables.multi[start as usize..(start + count) as usize]
@@ -229,7 +238,8 @@ mod runtime {
     use alloc::vec;
     use alloc::vec::Vec;
 
-    use super::{fx_hash, Tables};
+    use super::fx_hash;
+    use super::Tables;
 
     const MULTI_START_BIT: u32 = 1 << 31;
     const BLOOM_BITS: usize = 131072;
