@@ -119,8 +119,9 @@ impl TokenFilter for STConvertTokenFilter {
         let converted = self.converter.convert(&original);
 
         if converted == original {
-            // No change needed.
-            return (true, None);
+            // No change needed — keep the token as-is (Lucene's
+            // STConvertFilter never drops tokens).
+            return (false, None);
         }
 
         if self.config.keep_both {
@@ -131,11 +132,11 @@ impl TokenFilter for STConvertTokenFilter {
                 end_offset: token.end_offset,
                 position: token.position,
             };
-            (true, Some(vec![extra]))
+            (false, Some(vec![extra]))
         } else {
             // Replace the token's term with the converted form.
             token.term = Cow::Owned(converted);
-            (true, None)
+            (false, None)
         }
     }
 }
