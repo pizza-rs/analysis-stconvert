@@ -257,9 +257,10 @@ mod runtime {
         "jp_variants.txt",
     ];
 
-    /// Embedded raw dictionaries — the single source of truth shared with the
-    /// build script. Always present as a fallback so a missing external file
-    /// degrades gracefully rather than failing.
+    /// Embedded raw dictionaries, shared with the build script. Compiled in
+    /// only with `embed-fallback`; without it the external dictionary under
+    /// `<dict_dir>/stconvert/` is the only source and a missing file fails
+    /// loudly instead of quietly disabling conversion.
     #[cfg(feature = "embed-fallback")]
     static EMBEDDED: [&str; 7] = [
         include_str!("../data/t2s.txt"),
@@ -271,14 +272,23 @@ mod runtime {
         include_str!("../data/jp_variants.txt"),
     ];
     #[cfg(not(feature = "embed-fallback"))]
-    static EMBEDDED: [&str; 7] = [""; 7];
+    static EMBEDDED: [&str; 7] = ["", "", "", "", "", "", ""];
 
     fn raw_text(idx: usize) -> Cow<'static, str> {
         let embedded = EMBEDDED[idx];
         #[cfg(all(feature = "engine", feature = "std"))]
         {
-            pizza_engine::analysis::dict::load_str("stconvert", FILE_NAMES[idx], Some(embedded))
-                .unwrap_or(Cow::Borrowed(embedded))
+            let file = FILE_NAMES[idx];
+            let fallback = (!embedded.is_empty()).then_some(embedded);
+            pizza_engine::analysis::dict::load_str("stconvert", file, fallback).unwrap_or_else(
+                |e| {
+                    panic!(
+                        "stconvert dictionary '{file}' is not available: {e}; stage it under \
+                         config/analysis/stconvert/ ('make copy-analysis-dicts') or build \
+                         pizza-analysis-stconvert with the 'embed-fallback' feature"
+                    )
+                },
+            )
         }
         #[cfg(not(all(feature = "engine", feature = "std")))]
         {
